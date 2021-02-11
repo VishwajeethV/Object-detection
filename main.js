@@ -1,5 +1,6 @@
 IMG="";
 status="";
+objects=[];
 
 function preload() {
     IMG=loadImage("dog_cat.jpg");
@@ -24,13 +25,14 @@ function getResult(error,results) {
     }
     else{
         console.log(results);
+        objects=results;
     }
 }
 
 function draw() { 
     image(IMG,0,0,700,500);
 
-    fill("red");
+    /*fill("red");
     textSize(20);
     text("Dog",100,70);
     noFill();
@@ -44,5 +46,24 @@ function draw() {
     noFill();
     stroke("purple");
     strokeWeight(5);
-    rect(320,70,320,400);
+    rect(320,70,320,400);*/
+
+    if(status!="") {
+        for(var i=0;i<objects.length;i++) {
+             fill("red");
+             textSize(20);
+             percent=floor(objects[i].confidence*100)
+             text(objects[i].label+" "+percent+"%",objects[i].x+15,objects[i].y+20);
+             noFill();
+             stroke("purple");
+             strokeWeight(5);
+             rect(objects[i].x,objects[i].y,objects[i].width,objects[i].height);
+        }
+    }
+
+
+
+
+
+
 }
